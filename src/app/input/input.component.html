@@ -1,1 +1,63 @@
-<p>input works!</p>
+<h1>エラーの数：{{ errorCount$ | async }}</h1>
+
+<form [formGroup]="myForm">
+    <ul>
+        <li *ngFor="let check of checkList">
+            <input
+                type="checkbox"
+                [id]="check.value"
+                value=""
+                (change)="changeCheck(check.value, $event)"
+            />
+            <label [for]="check.value">{{ check.content }}</label>
+        </li>
+    </ul>
+    <p *ngIf="myForm.controls['check'].errors">
+        {{ myForm.controls["check"].errors["error"] }}
+    </p>
+
+    <input
+        type="text"
+        value=""
+        [formControl]="tel1Control"
+        (blur)="
+            checkTel(tel1Control.value, tel2Control.value, tel3Control.value)
+        "
+        (input)="
+            checkTel(tel1Control.value, tel2Control.value, tel3Control.value)
+        "
+    />-
+    <input
+        type="text"
+        value=""
+        [formControl]="tel2Control"
+        (blur)="
+            checkTel(tel1Control.value, tel2Control.value, tel3Control.value)
+        "
+        (input)="
+            checkTel(tel1Control.value, tel2Control.value, tel3Control.value)
+        "
+    />-
+    <input
+        type="text"
+        value=""
+        [formControl]="tel3Control"
+        (blur)="
+            checkTel(tel1Control.value, tel2Control.value, tel3Control.value)
+        "
+        (input)="
+            checkTel(tel1Control.value, tel2Control.value, tel3Control.value)
+        "
+    />
+
+    <p
+        *ngIf="
+            tel1Control.errors &&
+            (tel1Control.dirty || tel1Control.touched) &&
+            (tel2Control.dirty || tel2Control.touched) &&
+            (tel3Control.dirty || tel3Control.touched)
+        "
+    >
+        {{ tel1Control.errors["error"] }}
+    </p>
+</form>
