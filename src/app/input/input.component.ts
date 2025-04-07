@@ -10,6 +10,7 @@ import { ValidationService } from '../service/validation.service';
 import { CommonModule } from '@angular/common';
 import { InputStore } from './input.store';
 import { first, map, merge } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-input',
@@ -20,9 +21,9 @@ import { first, map, merge } from 'rxjs';
 })
 export class InputComponent {
     checkList = [
-        { value: '01', content: 'テスト1' },
-        { value: '02', content: 'テスト2' },
-        { value: '03', content: 'テスト3' },
+        { value: 'テスト1', content: 'テスト1' },
+        { value: 'テスト2', content: 'テスト2' },
+        { value: 'テスト3', content: 'テスト3' },
     ];
 
     myForm: FormGroup;
@@ -55,7 +56,8 @@ export class InputComponent {
     constructor(
         private validationService: ValidationService,
         private store: InputStore,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private router: Router
     ) {
         this.myForm = new FormGroup({
             check: this.checkFormBuilder,
@@ -147,5 +149,13 @@ export class InputComponent {
         this.tel2Control.markAsTouched();
         this.tel3Control.markAsDirty();
         this.tel3Control.markAsTouched();
+    }
+
+    /**
+     * 送信ボタン
+     */
+    onSubmit(): void {
+        const formData = this.myForm.getRawValue();
+        this.router.navigate(['/check'], { queryParams: formData });
     }
 }

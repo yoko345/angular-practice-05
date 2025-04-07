@@ -1,6 +1,6 @@
 <h1>エラーの数：{{ errorCount$ | async }}</h1>
 
-<form [formGroup]="myForm">
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
     <ul>
         <li *ngFor="let check of checkList">
             <input
@@ -60,4 +60,7 @@
     >
         {{ tel1Control.errors["error"] }}
     </p>
+
+    <br />
+    <button type="submit">送信</button>
 </form>
